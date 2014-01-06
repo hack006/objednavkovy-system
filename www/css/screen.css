@@ -101,11 +101,15 @@ html.js .jshidden {
     border: 2px solid #CCC;
     background-color: #FAFAFA;
 }
+#product-detail p{
+    margin: 1em 0;
+}
 #product-detail table{
     margin: 0.5em 0;
     width: 100%;
 }
 #product-detail table td, #product-detail table th{
+    padding: 0.35em 0.2em;
     border: 1px solid #EEE;
 }
 #product-detail th{
