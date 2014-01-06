@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a57e43bf3466c1c94d08905ce9afb8d6",
+    "hash": "4ffd7990e8e141119d9138b72b092a58",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -23,6 +23,54 @@
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
             "time": "2013-07-01 12:56:59"
+        },
+        {
+            "name": "kdyby/bootstrap-form-renderer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/BootstrapFormRenderer.git",
+                "reference": "b0f8131423281681023c6a4adf552006773e9b70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/BootstrapFormRenderer/zipball/b0f8131423281681023c6a4adf552006773e9b70",
+                "reference": "b0f8131423281681023c6a4adf552006773e9b70",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "@dev"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby\\BootstrapFormRenderer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Nette forms renderer with bootstrap",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "Forms",
+                "bootstrap",
+                "kdyby",
+                "nette"
+            ],
+            "time": "2013-12-26 21:28:47"
         },
         {
             "name": "nette/nette",
@@ -96,12 +144,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "b821a38960096e7e956d6bd12d3e3d65aac56819"
+                "reference": "df9da0a359f7c73d39af744c5c8a130f183f2d48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/b821a38960096e7e956d6bd12d3e3d65aac56819",
-                "reference": "b821a38960096e7e956d6bd12d3e3d65aac56819",
+                "url": "https://api.github.com/repos/o5/grido/zipball/df9da0a359f7c73d39af744c5c8a130f183f2d48",
+                "reference": "df9da0a359f7c73d39af744c5c8a130f183f2d48",
                 "shasum": ""
             },
             "require": {
@@ -144,7 +192,7 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2014-01-01 18:16:55"
+            "time": "2014-01-03 17:26:34"
         }
     ],
     "packages-dev": [
@@ -206,7 +254,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "o5/grido": 20
+        "o5/grido": 20,
+        "kdyby/bootstrap-form-renderer": 20
     },
     "platform": {
         "php": ">= 5.3.0"

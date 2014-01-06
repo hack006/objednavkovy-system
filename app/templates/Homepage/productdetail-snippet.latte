@@ -1,0 +1,44 @@
+{ifset $product_detail}
+    <div id="product-detail">
+        <h4>Detail produktu: {$product_detail->name}</h4>
+        <img n:attr="src => $img, class => img-polaroid, alt => $product_detail->name" />
+        <p>{$product_detail->description}</p>
+        <table>
+            <tr>
+                <th>Cena bez daně:</th>
+                <td class="price">{$product_detail->price_without_tax}Kč</td>
+            </tr>
+            <tr>
+                <th>Cena s daní:</th>
+                <td class="price">{$price_with_tax}Kč</td>
+            </tr>
+            <tr>
+                <th>Daň:</th>
+                <td><span>{$product_detail->vat_name}</span></td>
+            </tr>
+            <tr>
+                <th>Přibližná doba dodání: </th>
+                <td>
+                    {var $d = $product_detail->min_order_time_days}
+                    {var $h = $product_detail->min_order_time_hours}
+                    {$product_detail->min_order_time_days} {if $d == 1}
+                        den
+                    {elseif $d >= 2 && $d <= 4}
+                        dny
+                    {else}
+                        dnů
+                    {/if}
+                    a
+                    {$product_detail->min_order_time_hours} {if $h == 1}
+                        hodinu
+                    {elseif $h >= 2 && $h <= 4}
+                        hodiny
+                    {else}
+                        hodin
+                    {/if}
+
+                </td>
+            </tr>
+        </table>
+    </div>
+{/ifset}

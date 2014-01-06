@@ -1,0 +1,35 @@
+{ifset $current_order}
+<table>
+    <thead>
+    <tr>
+        <th colspan="5">Produkt</th>
+    </tr>
+    <tr>
+        <th>Cena jed.</th>
+        <th>Počet</th>
+        <th>Suma</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    {foreach $current_order->getProducts() as $product}
+        {var $sidebar_product_id = "sidebar-product-id-".$product->id}
+        <tbody n:attr="id => $sidebar_product_id">
+        <tr>
+            <th colspan="5"><strong>{$product->name}</strong></th>
+        </tr>
+        <tr>
+            <td>{$product->price_vat_included} Kč</td>
+            <td>{$product->count}x</td>
+            <td>{$product->total_price_vat_included} Kč</td>
+            <td><a class="btn ajax" n:href="removeProductFromOrder! $product->id, 1"
+                   title="Odebrat 1 kus produktu z objednávky">-1</a></td>
+            <td><a class="btn btn-danger ajax" n:href="removeProductFromOrder! $product->id, 2147483647"
+                   title="Odstranit celý produkt z objednávky">X</a></td>
+        </tr>
+        </tbody>
+    {/foreach}
+</table>
+    {else}
+Žádné zboží doposud nevybráno
+{/ifset}

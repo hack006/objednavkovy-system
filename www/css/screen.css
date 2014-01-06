@@ -31,15 +31,6 @@ a[href^="error:"] {
 	color: white;
 }
 
-form th, form td {
-	vertical-align: top;
-	font-weight: normal;
-}
-
-form th {
-	text-align: right;
-}
-
 form .required label {
 	font-weight: bold;
 }
@@ -51,4 +42,92 @@ form .error {
 
 html.js .jshidden {
 	display: none;
+}
+
+/* modální prvek sloužící pro zobrazení loaderu */
+#status-modal{
+    /* vicemene prevzato z: http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation */
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
+}
+
+/* jednoduchy graficky box s nadpisem a telem */
+.group-box{
+    margin-bottom: 3em;
+}
+.grp-box-head{
+    border-bottom: #AAA 3px solid;
+}
+.group-box .intro{
+    border-bottom: #DDD 1px solid;
+    padding: 0.5em 0;
+}
+.grp-box-head > h2{
+    color: #1785CF;
+}
+
+.grp-box-body{
+    padding: 7px;
+    border-bottom: #999 2px solid;
+}
+
+/* náhledy produktu */
+.product-cont table{margin: 0.5em 0;}
+.product-cont table td, .product-cont table th{
+    width: 100%;
+    border: 1px solid #EEE;
+}
+.product-cont th{
+    text-align: left;
+}
+.product-cont td.price{
+    color: red;
+    text-align: right;
+    min-width: 60px;
+}
+.product-cont {
+    text-align: center;
+}
+
+/* detail produktu */
+#product-detail{
+    padding: 0.5em;
+    border: 2px solid #CCC;
+    background-color: #FAFAFA;
+}
+#product-detail table{
+    margin: 0.5em 0;
+    width: 100%;
+}
+#product-detail table td, #product-detail table th{
+    border: 1px solid #EEE;
+}
+#product-detail th{
+    text-align: left;
+}
+#product-detail td.price{
+    color: red;
+    text-align: right;
+    min-width: 200px;
+}
+
+/* sidebar - přehled objednávky */
+#right-sidebar table{
+    width: 100%;
+}
+#right-sidebar td, #right-sidebar th{
+    padding: 0.35em 0.2em;
+    border: 1px solid #EEE;
+}
+#right-sidebar tbody th{
+    background-color: #DDD;
+}
+#order-to-2nd-step{
+    margin: 2em 0 1em 0;
 }

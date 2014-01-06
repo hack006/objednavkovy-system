@@ -29,8 +29,10 @@ common:
 		authenticator: ResSys\Authenticator
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter
+		database: @nette.database.default
 		productModel: ResSys\ProductModel
 		vatModel:   ResSys\VatModel
+		actionModel: ResSys\ActionModel
 
 	factories:
 

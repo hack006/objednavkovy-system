@@ -10,7 +10,7 @@ use \Nette\Utils\Html;
 /**
  * Sign in/out presenters.
  */
-class ProductPresenter extends BasePresenter
+class ProductPresenter extends \AdminModule\BasePresenter
 {
     /** @var  Product DB model */
     private $products;
@@ -21,16 +21,43 @@ class ProductPresenter extends BasePresenter
         $this->products = $products;
     }
 
+    /**
+     * Akce výpis produktů
+     */
     public function renderDefault() {
+        $this->mustBeAdmin();
+
+        $this->template->title = 'Produkty';
         $this->template->posts = $this->products->findAll();
 
     }
 
+    /**
+     * Akce nový produkt
+     */
     public function renderNew(){
-        // uživatel musí být přihlášen
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect(':Sign:in');
+        $this->mustBeAdmin();
+    }
+
+    /**
+     * Funkce zpracovávající odeslaná data z formuláře a ukládající je do DB
+     */
+    public function productFormSubmitted(Form $form){
+        $this->mustBeAdmin();
+
+        $this->products->createProduct($form->values->name, $form->values->description, $form->values->price_without_tax,
+            $form->values->min_order_time_hours, $form->values->min_order_time_days, $form->values->vat_id);
+
+        $this->flashMessage('Produkt přidán.', 'success');
+        if (!$this->isAjax()) {
+            $this->redirect('this');
         }
+
+        $form->setValues(null, true);
+        $this['productForm']->
+
+        $form->setValues(array('userId' => $form->values->userId), TRUE);
+        $this['taskList']->invalidateControl();
     }
 
     /**
@@ -40,7 +67,9 @@ class ProductPresenter extends BasePresenter
         $vats = $this->vats->getHTMLSelectPairs();
         $default_vat = $this->vats->getDefault();
 
+        $renderer = new \Kdyby\BootstrapFormRenderer\BootstrapRenderer();
         $form = new \Nette\Application\UI\Form();
+        $form->setRenderer($renderer);
         // CSRF protekce pomocí přidaného bezpečnostnímu tokenu
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
 
@@ -67,48 +96,31 @@ class ProductPresenter extends BasePresenter
     }
 
     /**
-     * Funkce zpracovávající odeslaná data z formuláře a ukládající je do DB
+     * Vytvoří grafickou komponentu pro výpis produktů do přehledné tabulky
      */
-    public function productFormSubmitted(Form $form){
-        $this->products->createProduct($form->values->name, $form->values->description, $form->values->price_without_tax,
-            $form->values->min_order_time_hours, $form->values->min_order_time_days, $form->values->vat_id);
-
-        $this->flashMessage('Produkt přidán.', 'success');
-        if (!$this->isAjax()) {
-            $this->redirect('this');
-        }
-
-        $form->setValues(null, true);
-        $this['productForm']->
-
-        $form->setValues(array('userId' => $form->values->userId), TRUE);
-        $this['taskList']->invalidateControl();
-    }
-
     protected function createComponentProductgrid()
     {
         $grid = new \Grido\Grid($this, 'productgrid');
         $grid->setModel($this->context->productModel->findAll()->select('products.*, vats.name AS vatname'));
         $grid->addColumnText('name', 'Název')
-            ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setColumn('name')
+            ->setSortable();
         $grid->addColumnText('price_without_tax', 'Cena bez daně')
-            ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setSortable();
         $grid->addColumnText('vatname', 'Daň')
             ->setColumn('vatname')
-            ->setSortable()
-            ->setFilterText();
+            ->setSortable();
         $grid->addColumnText('min_order_time_hours', 'Vyřízení objednávky [hod]')
-            ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setSortable();
         $grid->addColumnText('min_order_time_days', 'Vyřízení objednávky [dny]')
-            ->setSortable()
-            ->setFilterText()
-            ->setSuggestion();
+            ->setSortable();
+        $grid->addActionHref('edit', 'Edit')
+            ->setIcon('pencil');
+
+        $grid->addActionHref('delete', 'Delete')
+            ->setIcon('trash')
+            ->setConfirm(function($item) {
+            return "Opravdu chcete smazat výrobek {$item->name}?";});
         $grid->setExport();
         //return $grid;
     }
