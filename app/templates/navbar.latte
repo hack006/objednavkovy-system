@@ -1,32 +1,33 @@
 {block navbar}
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="#">Objednávkový systém</a>
-            <div class="nav-collapse collapse">
-                <p class="navbar-text pull-right">
-                    {if $user->isLoggedIn()}
-                        Jste přihlášen jako <a title="Zobrazit můj uživatelský profil.">{$user->getIdentity()->username}</a>
-                        ,<a n:href="Sign:out" title="Provede odhlášení ze systému.">odhlásit</a>
-                    {else}
-                        Aktuálně nejste přihlášeni, <a n:href="Sign:in" title="Zobrazí Vám přihlašovací dialog">přihlásit se</a>
-                    {/if}
-                </p>
-                <ul class="nav">
-                    {if $user->isLoggedIn()}
-                    <li><a n:href="Order:default">Mé objednávky</a></li>
-                    {/if}
-                    <li>Zaregistrovat</li>
-                </ul>
-            </div><!--/.nav-collapse -->
+<nav>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/">Objednávkový systém</a>
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        {if $user->isLoggedIn()}
+                            Jste přihlášen jako <a title="Zobrazit můj uživatelský profil.">{$user->getIdentity()->username}</a>
+                            ,<a n:href="Sign:out" title="Provede odhlášení ze systému.">odhlásit</a>
+                        {else}
+                            Aktuálně nejste přihlášeni, <a n:href="Sign:in" title="Zobrazí Vám přihlašovací dialog">přihlásit se</a>
+                        {/if}
+                    </p>
+                    <ul class="nav">
+                        {if $user->isLoggedIn()}
+                        <li><a n:href="Order:default">Mé objednávky</a></li>
+                        {/if}
+                    </ul>
+                </div><!--/.nav-collapse -->
 
+            </div>
         </div>
     </div>
-</div>
+</nav>
 {/block}

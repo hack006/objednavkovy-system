@@ -2,107 +2,113 @@
 <div class="row">
     <div class="span8" id="main-content">
     {snippet actions}
+    <article>
     {foreach $actions as $action}
     {if (isset($active_action) && ($action->id == $active_action)) || !isset($active_action)}
-    <div class="group-box">
-        <div class="grp-box-head">
-            <h2>{$action->name}</h2>
-        </div>
-        <div class="grp-box-body">
-            <div class="intro">
-                Objednávky možné v období:
-                {if !$action_order_possible[$action->id]}
-                <br /><span class="label label-important">Objednat online není možné! Objednávky aktuálně přijímáme pouze telefonicky.</span>
-                {/if}
-                <dl>
-                    <dt>Od:</dt>
-                    <dd>{$action->order_from|date:'j. M Y G:i'}</dd>
-                    <dt>Do:</dt>
-                    <dd>{$action->order_until|date:'j. M Y G:i'}</dd>
-                </dl>
-                {$action->description}
-            </div>
-
-            <div class="products">
-                {snippet productdetail}
-                    {include 'productdetail-snippet.latte'}
-                {/snippet}
-                <h3>Produkty</h3>
-                {if count($action_products[$action->id]) <= 0}
-                    V současné době nejsou pro tuto akci k dispozici žádné produkty.
-                {/if}
-                {foreach $action_products[$action->id] as $product}
-                {* Slouží pro obalení 4 produktů do řádku. POZOR! párové*}
-                {if ($iterator->counter)%4 == 1}
-                    <div class="row-fluid">
-                {/if}
-                        <div class="product-cont span3">
-                            <h3>{$product->name}</h3>
-                            <img n:attr="src => $product_images[$product->id], class => img-polaroid, alt => $product->name" />
-
-                            {var $vat_value = 1 + $product->vat_value / 100}
-                            <table>
-                                <tr>
-                                    <th>Cena:</th>
-                                    <td class="price">{$product->price_without_tax} Kč</td>
-                                </tr>
-                                <tr>
-                                    <th>Cena s daní:</th>
-                                    <td class="price" rowspan="2">{$product->price_without_tax * $vat_value} Kč</td>
-                                </tr>
-                                <tr>
-                                    <th>({$product->vat_value}%)</th>
-                                </tr>
-                            </table>
-
-                            <div class="controls">
-                                {*
-                                {var $count_control_id = "product-count-id-".$product->id}
-                                <input type="text" value="1" n:attr="id => $count_control_id">
-                                *}
-                                <a class="btn ajax btn-block" n:href="viewProductDetail! $product->id"
-                                        title="Zobrazit podrobnější informace k produktu.">
-                                    <i class="icon-eye-open"></i>
-                                    Detail produktu
-                                </a>
-                                {if $action_order_possible[$action->id]}
-                                <a class="btn btn-primary btn-block ajax" n:href="addProductToOrder! $product->id, $action->id"
-                                        title="Přidat produkt do aktuální objednávky. Produkt lze následně i odebrat.">
-                                    <i class="icon-plus icon-white"></i>
-                                    Přidat do objednávky
-                                </a>
-                                {else}
-                                <a class="btn btn-primary btn-block disabled"
-                                        title="Přidání produktu není možné, protože byl překročen termín poslední možnosti elektronické objednávky. Objednávat lze nyní pouze telefonicky.">
-                                    <i class="icon-plus icon-white"></i>
-                                    Přidat do objednávky
-                                </a>
-                                {/if}
-                            </div>
-                        </div>
-                {* Slouží pro obalení 4 produktů do řádku. POZOR! párové *}
-                {if ($iterator->counter)%4 == 0 || $iterator->last}
+        <section>
+            <div class="group-box">
+                <div class="grp-box-head">
+                    <h2>{$action->name}</h2>
+                </div>
+                <div class="grp-box-body">
+                    <div class="intro">
+                        Objednávky možné v období:
+                        {if !$action_order_possible[$action->id]}
+                        <br /><span class="label label-important">Objednat online není možné! Objednávky aktuálně přijímáme pouze telefonicky.</span>
+                        {/if}
+                        <dl>
+                            <dt>Od:</dt>
+                            <dd>{$action->order_from|date:'j. M Y G:i'}</dd>
+                            <dt>Do:</dt>
+                            <dd>{$action->order_until|date:'j. M Y G:i'}</dd>
+                        </dl>
+                        {$action->description}
                     </div>
-                {/if}
-                {/foreach}
-            </div>
 
-        </div>
-    </div>
+                    <div class="products">
+                        {snippet productdetail}
+                            {include 'productdetail-snippet.latte'}
+                        {/snippet}
+                        <h3>Produkty</h3>
+                        {if count($action_products[$action->id]) <= 0}
+                            V současné době nejsou pro tuto akci k dispozici žádné produkty.
+                        {/if}
+                        {foreach $action_products[$action->id] as $product}
+                        {* Slouží pro obalení 4 produktů do řádku. POZOR! párové*}
+                        {if ($iterator->counter)%4 == 1}
+                            <div class="row-fluid">
+                        {/if}
+                                <div class="product-cont span3">
+                                    <h3>{$product->name}</h3>
+                                    <img n:attr="src => $product_images[$product->id], class => img-polaroid, alt => $product->name" />
+
+                                    {var $vat_value = 1 + $product->vat_value / 100}
+                                    <table>
+                                        <tr>
+                                            <th>Cena:</th>
+                                            <td class="price">{$product->price_without_tax} Kč</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cena s daní:</th>
+                                            <td class="price" rowspan="2">{$product->price_without_tax * $vat_value} Kč</td>
+                                        </tr>
+                                        <tr>
+                                            <th>({$product->vat_value}%)</th>
+                                        </tr>
+                                    </table>
+
+                                    <div class="controls">
+                                        {*
+                                        {var $count_control_id = "product-count-id-".$product->id}
+                                        <input type="text" value="1" n:attr="id => $count_control_id">
+                                        *}
+                                        <a class="btn ajax btn-block" n:href="viewProductDetail! $product->id"
+                                                title="Zobrazit podrobnější informace k produktu.">
+                                            <i class="icon-eye-open"></i>
+                                            Detail produktu
+                                        </a>
+                                        {if $action_order_possible[$action->id]}
+                                        <a class="btn btn-primary btn-block ajax" n:href="addProductToOrder! $product->id, $action->id"
+                                                title="Přidat produkt do aktuální objednávky. Produkt lze následně i odebrat.">
+                                            <i class="icon-plus icon-white"></i>
+                                            Přidat do objednávky
+                                        </a>
+                                        {else}
+                                        <a class="btn btn-primary btn-block disabled"
+                                                title="Přidání produktu není možné, protože byl překročen termín poslední možnosti elektronické objednávky. Objednávat lze nyní pouze telefonicky.">
+                                            <i class="icon-plus icon-white"></i>
+                                            Přidat do objednávky
+                                        </a>
+                                        {/if}
+                                    </div>
+                                </div>
+                        {* Slouží pro obalení 4 produktů do řádku. POZOR! párové *}
+                        {if ($iterator->counter)%4 == 0 || $iterator->last}
+                            </div>
+                        {/if}
+                        {/foreach}
+                    </div>
+
+                </div>
+            </div>
+        </section>
     {/if}
     {/foreach}
+    </article>
     {/snippet}
     </div>
-    <div class="span4">
-        <div  id="right-sidebar">
-            <h2>Objednávka</h2>
-            {snippet sidebar}
-            {include 'sidebar-snippet.latte'}
-            {/snippet}
-            <a id="order-to-2nd-step" class="btn btn-info btn-block" n:href="Order:selectOrderPickUp"
-               title="Stiskněte pro přechod k dalšímu kroku objednávky, kde zvolíte termín vyzvednutí.">Dokončit objednávku</a>
+    <aside>
+        <div class="span4">
+            <div  id="right-sidebar">
+                <h2>Objednávka</h2>
+                {snippet sidebar}
+                {include 'sidebar-snippet.latte'}
+                {/snippet}
+                <a id="order-to-2nd-step" class="btn btn-info btn-block" n:href="Order:selectOrderPickUp"
+                   title="Stiskněte pro přechod k dalšímu kroku objednávky, kde zvolíte termín vyzvednutí.">Dokončit objednávku</a>
+            </div>
         </div>
-    </div>
+    </aside>
 </div>
     {dump}
 {/block}

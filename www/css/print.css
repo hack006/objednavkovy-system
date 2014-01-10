@@ -1,4 +1,11 @@
+/*
+
+GLOBALNI STYLY
+
+*/
 body {
+    margin: 0;
+    padding: 0;
 	font: 12pt/1.4 "Trebuchet MS", "Geneva CE", lucida, sans-serif;
 	color: black;
 	background: none;
@@ -9,4 +16,25 @@ a img { border: none; }
 
 #ajax-spinner {
 	display: none;
+}
+.navbar, .alert, .btn, #footer{
+    display: none !important;
+}
+table{
+    border: solid 1px #AAA;
+    width: 95%;
+    margin: 5pt 2.5% 5pt 2.5%;
+}
+table td, table th{
+    border: solid 1px #EEEEEE;
+}
+/*
+
+SPECIFICKE STYLY
+
+*/
+/* NAVIGACE */
+ul.breadcrumb li{
+    list-style-type: none;
+    display: inline;
 }

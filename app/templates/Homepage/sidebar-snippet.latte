@@ -29,6 +29,12 @@
         </tr>
         </tbody>
     {/foreach}
+    <tfoot>
+        <tr>
+            <th colspan="2">Celkem</th>
+            <td>{$current_order->getTotalPrice()} Kč</td>
+        </tr>
+    </tfoot>
 </table>
     {else}
 Žádné zboží doposud nevybráno

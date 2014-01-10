@@ -13,16 +13,18 @@
     <meta name="description" content="">
     <meta name="robots" content="{$robots}" n:ifset="$robots">
 
-    <title>{block title|striptags|upper}ADMINISTRACE {ifset $title} - {$title}{/ifset}{/block}</title>
+    <title>{block title|striptags|upper}Objednávkový systém {ifset $title} - {$title}{/ifset}{/block}</title>
 
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{$basePath}/css/bootstrap.css">
     <link rel="stylesheet" href="{$basePath}/css/bootstrap-responsive.css">
+
+    <link rel="stylesheet" media="all" href="{$basePath}/css/all.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
     <link rel="stylesheet" href="{$basePath}/css/bootstrap-custom.css">
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,7 +38,9 @@
 <body>
 <script> document.documentElement.className+=' js' </script>
 
+<header>
 {block navbar}{include 'navbar.latte'}{/block}
+</header>
 
 <div id="content">
     <div class="container">
@@ -47,16 +51,46 @@
         {$flash->message}
         </div>
         {/snippet}
+
         <div class="page-header" n:ifset="$title">
             <h1>{$title}</h1>
         </div>
-    {include #content}
+        {include #content}
     </div>
 </div>
 
-<div id="footer">
-    footer here
-</div>
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="span3">
+                <h3>Cookies</h3>
+                <p>
+                    Naše aplikace využívá k poskytnutí služeb soubory cookies.
+                    Využíváním služeb souhlasíte s poskytováním cookies.
+                </p>
+            </div>
+            <div class="span3">
+                <h3>Provozovatel</h3>
+                <p>
+                    Zde můžete doplnit informace o své osobě/firmě.
+                </p>
+                <address>
+                    <strong>Společnost s.r.o.</strong><br />
+                    Ulice 123 <br />
+                    Praha 6<br />
+                    160 00
+                </address>
+            </div>
+            <div class="span3">
+                <h3>Kontakt</h3>
+                <ul class="contact">
+                    <li><strong><abr title="Telefon">Tel</abr>:</strong> 987 654 321</li>
+                    <li><strong>Email:</strong> test@example.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {block scripts}
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

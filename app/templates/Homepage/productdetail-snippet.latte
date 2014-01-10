@@ -1,4 +1,5 @@
 {ifset $product_detail}
+<article>
     <div id="product-detail">
         <h4>Detail produktu: {$product_detail->name}</h4>
         <img n:attr="src => $img, class => img-polaroid, alt => $product_detail->name" />
@@ -41,4 +42,5 @@
             </tr>
         </table>
     </div>
+</article>
 {/ifset}

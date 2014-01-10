@@ -16,7 +16,10 @@ class SignPresenter extends BasePresenter
 	 */
 	protected function createComponentSignInForm()
 	{
+        $renderer = new \Kdyby\BootstrapFormRenderer\BootstrapRenderer();
+
 		$form = new UI\Form;
+        $form->setRenderer($renderer);
 		$form->addText('username', 'Uživatelské jméno:')
 			->setRequired('Prosím zadejte uživatelské jméno.');
 
@@ -25,7 +28,8 @@ class SignPresenter extends BasePresenter
 
 		$form->addCheckbox('remember', 'Zůstat přihlášen');
 
-		$form->addSubmit('send', 'Přihlásit');
+		$form->addSubmit('send', 'Přihlásit')
+            ->setOption('class', 'btn btn-primary');
 
 		// call method signInFormSucceeded() on success
 		$form->onSuccess[] = $this->signInFormSucceeded;
@@ -52,6 +56,9 @@ class SignPresenter extends BasePresenter
 		}
 	}
 
+    public function actionIn(){
+        $this->template->title = 'Přihlášení';
+    }
 
 	public function actionOut()
 	{
