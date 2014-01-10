@@ -33,6 +33,10 @@ common:
 		productModel: ResSys\ProductModel
 		vatModel:   ResSys\VatModel
 		actionModel: ResSys\ActionModel
+		orderModel: ResSys\OrderModel
+		orderFieldModel: ResSys\OrderFieldModel
+		fetchHourModel: ResSys\FetchHourModel
+		userModel: ResSys\UserModel
 
 	factories:
 

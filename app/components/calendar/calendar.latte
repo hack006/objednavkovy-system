@@ -1,0 +1,89 @@
+<div class="calendar-wrapper">
+    {snippet calendarcontrol}
+        {foreach $flashes as $flash}
+            <div class="alert alert-{$flash->type}">{$flash->message}</div>
+        {/foreach}
+
+        <a class="ajax btn" n:href="previousMonth! month => $month, year => $year">Předchozí měsíc</a>
+        <span>{$month} / {$year}</span>
+        <a class="ajax btn" n:href="nextMonth! month => $month, year => $year">Následující měsíc</a>
+    {/snippet}
+    {snippet calendarbody}
+    <table>
+        <thead>
+            <tr>
+                {foreach $headings as $heading}
+                <th>{$heading}</th>
+                {/foreach}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {for $i=0; $i < $running_day; $i++}
+                <td class="empty-day"></td>
+            {/for}
+            {var $day = 1}
+            {for $i=$running_day; $i < 7; $i++}
+                <td n:class="$items[$day]['class'], (isset($selected_day) && $day == $selected_day) ? selected, calendar-day">
+                    <div class="day-number">
+                        {if $items[$day]['selectable']}
+                        <a class="ajax" n:href="click! $day, $month, $year">{$day}</a>
+                        {else}
+                            {$day}
+                        {/if}
+                    </div>
+                    {ifset $items[$day], $items[$day]['items']}
+                    {foreach $items[$day]['items'] as $item}
+                        {ifset $item['text']}
+                            <div class="item">
+                                {ifset $item['from'], $item['until']}
+                                <span class="label label-info">
+                                    {$item['from']|date:"G:i"} - {$item['until']|date:"G:i"}
+                                </span>
+                                {/ifset}
+                                {$item['text']}
+                            </div>
+                        {/ifset}
+                    {/foreach}
+                    {/ifset}
+                </td>
+                {var $day++}
+            {/for}
+            </tr>
+            {var $remain_days = $days_in_month - $day}
+            {var $empty_days_end = 6 - $remain_days % 7}
+            {for $i=0; $i <= ($remain_days); $i++}
+            {if $i % 7 == 0}<tr>{/if}
+                <td n:class="$items[$day]['class'], (isset($selected_day) && $day == $selected_day) ? selected, calendar-day">
+                    <div class="day-number">
+                        {if $items[$day]['selectable']}
+                            <a class="ajax" n:href="click! $day, $month, $year">{$day}</a>
+                            {else}
+                            {$day}
+                        {/if}
+                    </div>
+                    {ifset $items[$day], $items[$day]['items']}
+                        {foreach $items[$day]['items'] as $item}
+                            {ifset $item['text']}
+                                <div class="item">
+                                    {ifset $item['from'], $item['until']}
+                                        <span class="label label-info">
+                                    {$item['from']|date:"G:i"} - {$item['until']|date:"G:i"}
+                                </span>
+                                    {/ifset}
+                                    {$item['text']}
+                                </div>
+                            {/ifset}
+                        {/foreach}
+                    {/ifset}
+                </td>
+                {var $day++}
+            {if $i % 7 == 6}</tr>{/if}
+            {/for}
+            {for $i=0; $i < $empty_days_end; $i++}
+            <td class="empty-day"></td>
+            {/for}
+        </tbody>
+    </table>
+    {/snippet}
+</div>{dump $items}

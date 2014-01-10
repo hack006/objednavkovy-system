@@ -13,4 +13,5 @@ class ActionModel extends AbstractModelDB{
         return $this->connection->context->table('actions_products')
             ->where('action_id = ?', $action_id)->select('products.*, products.vats.value AS vat_value');
     }
+
 }

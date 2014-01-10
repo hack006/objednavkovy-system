@@ -13,20 +13,26 @@ class OrderProxy{
      */
     private $order;
 
+    private $orders;
+
+    private $order_fields;
+
     /**
      * Konstruktor
      *
      * @param \Nette\Database\Connection $db Připojení k DB
      * @param Order $order Objekt objednávky, který bude zapouzdřován. Pokud nepředán, vytvoří se nový.
      */
-    public function __construct(\Nette\Database\Connection $db, \ResSys\Order $order = NULL){
+    public function __construct(\Nette\Database\Connection $db, \ResSys\Order &$order = NULL){
         $this->connection = $db;
         if(!isset($order)){
             $this->order = new Order();
         }
         else{
-            $this->order = $order;
+            $this->order = &$order;
         }
+        $this->orders = new OrderModel($db);
+        $this->order_fields = new OrderFieldModel($db, new ProductModel($db));
     }
 
     /**
@@ -111,6 +117,40 @@ class OrderProxy{
         catch(\Nette\OutOfRangeException $e){
             // již není počtem kusů validní
             $this->order->removeProduct($product_id);
+            // je nutno zkontrolovat obsah objednávky, případně anulovat action_id pokud není k dispozici žádny item
+            if($this->order->getTotalItemsCount() <= 0){
+                $this->order->setActionId(null);
+            }
         }
+
+    }
+
+    public function setPickUpDate(\Nette\DateTime $date){
+        // @todo validace
+        $this->order->setPickUpDate($date);
+    }
+
+    public function getPickUpDate(){
+        return $this->order->getPickUpDate();
+    }
+
+    /**
+     * Potvrdí objednávku a uloží ji do DB
+     */
+    public function confirmOrder($user_id){
+        // uložit objednávku
+        $order = $this->orders->createOrder($this->order->getPickUpDate(), 'test', $user_id, $this->order->getActionId());
+        if($order != null){
+            // uložit položky objednávky
+            foreach($this->getItems() as $item){
+                $this->order_fields->createOrderField($item->id, $order->id, $item->count);
+            }
+
+            // odstraníme objednávkovou session
+            $this->order = null;
+
+            return true;
+        }
+        throw new Exception("Error při ukládání objednávky do DB");
     }
 }

@@ -30,6 +30,10 @@ class HomepagePresenter extends BasePresenter
         $this->template->action_order_possible = array();
         $this->template->action_products = array();
         $this->template->product_images = array();
+        // určuje aktivní akci, pro kterou tvoříme objednávku
+        if(isset($this->getSession("user_space")->current_order)){
+            $this->template->active_action = $this->getSession("user_space")->current_order->getActionId();
+        }
 
         foreach($this->template->actions as $action){
             $products = $this->actions->getActionProducts($action->id);
@@ -59,17 +63,25 @@ class HomepagePresenter extends BasePresenter
      *
      * @param $product_id Identifikátor produktu, který chceme přidat
      */
-    public function handleAddProductToOrder($product_id){
+    public function handleAddProductToOrder($product_id, $action_id){
+
         // @TODO zkontrolovat, zda ještě můžeme přidávat
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);
-
-        // přidat produkt do objednávky
-        $order_p->addItem($product_id, 1);
 
         // pokud neexistuje session, založit
         if(!isset($this->getSession("user_space")->current_order)){
             $this->getSession("user_space")->current_order = $order_p->getOrder();
         }
+
+        // nastavit id akce, pokud se tak ještě nestalo
+        if(!is_numeric($this->getSession("user_space")->current_order->getActionId())){
+            $this->getSession("user_space")->current_order->setActionId($action_id);
+            // taktéž musíme skrýt ostatní akce, aby se nám nemíchaly akce v objednávce
+            $this->redrawControl('actions');
+        }
+
+        // přidat produkt do objednávky
+        $order_p->addItem($product_id, 1);
 
         if(!$this->isAjax()){
             $this->redirect("Homepage:default");
@@ -90,11 +102,16 @@ class HomepagePresenter extends BasePresenter
      * @param $count Počet kusů k odebrání
      */
     public function handleRemoveProductFromOrder($product_id, $count){
+
         // @TODO zkontrolovat, zda ještě můžeme odebírat
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);
 
         try{
             $order_p->removeItem($product_id, $count);
+            // v případě, že opět nemáme produkt v objednávce, je třeba nabídnout uživateli všechny akce
+            if(!is_numeric($this->getSession("user_space")->current_order->getActionId())){
+                $this->redrawControl('actions');
+            }
         }
         catch(\Nette\InvalidArgumentException $e){
             $this->error("Při odebírání nastal neočekávaný problém!");

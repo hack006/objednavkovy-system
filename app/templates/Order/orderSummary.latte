@@ -1,0 +1,86 @@
+{block navigation}
+    {control step3Breadcrumb}
+{/block}
+
+{block content}
+<div class="alert">
+    <i class="icon-warning-sign"></i>
+    Před samotným potvrzením objednávky si prosím překontrolujte jeji správnost. Po odeslání již není možné provádět
+    jakékoliv úpravy!
+</div>
+<div class="alert alert-info">
+    <i class="icon-print"></i>
+    Tato stránka je optimalizována pro tisk.
+</div>
+<h2>Zvolené produkty</h2>
+
+<div id="order-summary">
+    <table id="products" class="table">
+        <thead>
+            <tr>
+                <th >Název</th>
+                <th>Obrázek</th>
+                <th>Cena za kus</th>
+                <th>Počet</th>
+                <th>Celková cena</th>
+            </tr>
+        </thead>
+        {foreach $order->getProducts() as $product}
+        <tbody>
+            <tr>
+                <td>{$product->name}</td>
+                <td>
+                    <img src="{$basePath}/{\ResSys\Imagefactory::getProductImage($product->id, \ResSys\Imagefactory::THUMB)}" />
+                </td>
+                <td class="price">{$product->price_vat_included} Kč</td>
+                <td>{$product->count}x</td>
+                <td class="price">{$product->total_price_vat_included} Kč</td>
+            </tr>
+        </tbody>
+        {/foreach}
+        <tfoot>
+            <td colspan="4">Celkem</td>
+            <td class="price">{$order_price_total} Kč</td>
+        </tfoot>
+    </table>
+
+
+    <h2>Odběr</h2>
+
+    <p>
+        Pro odběr zboží z akce <strong>{$action->name}</strong> jste zvolili datum
+        <strong>{$order->getPickUpDate()|date:'l, j. F Y'}.</strong>
+        Objednávku pro Vás budeme mít připravenou na zadaný čas <strong>{$order->getPickUpDate()|date:'H:m'}</strong>.
+    </p>
+    <h2>Kontaktní údaje</h2>
+    <table class="table">
+        <thead class="hide">
+            <tr>
+                <th>Kontaktní položka</th>
+                <th>Hodnota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Jméno:</th>
+                <td>{$user_info->firstname} {$user_info->lastname}</td>
+            </tr>
+            <tr>
+                <th>Bydliště:</th>
+                <td>{$user_info->city}</td>
+            </tr>
+            <tr>
+                <th>Email: </th>
+                <td>{$user_info->email}</td>
+            </tr>
+            <tr>
+                <th>Telefon:</th>
+                <td>{$user_info->phone}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary pull-right ajax" n:href="confirmOrder">Vytvořit závaznou objednávku</a>
+</div>
+{dump $order}
+{dump $order->getProducts()}
+{/block}

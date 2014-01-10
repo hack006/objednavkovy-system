@@ -1,7 +1,9 @@
 {block content}
 <div class="row">
     <div class="span8" id="main-content">
+    {snippet actions}
     {foreach $actions as $action}
+    {if (isset($active_action) && ($action->id == $active_action)) || !isset($active_action)}
     <div class="group-box">
         <div class="grp-box-head">
             <h2>{$action->name}</h2>
@@ -14,9 +16,9 @@
                 {/if}
                 <dl>
                     <dt>Od:</dt>
-                    <dd>{$action->order_from|date:'j. M Y g:i'}</dd>
+                    <dd>{$action->order_from|date:'j. M Y G:i'}</dd>
                     <dt>Do:</dt>
-                    <dd>{$action->order_until|date:'j. M Y g:i'}</dd>
+                    <dd>{$action->order_until|date:'j. M Y G:i'}</dd>
                 </dl>
                 {$action->description}
             </div>
@@ -64,7 +66,7 @@
                                     Detail produktu
                                 </a>
                                 {if $action_order_possible[$action->id]}
-                                <a class="btn btn-primary btn-block ajax" n:href="addProductToOrder! $product->id"
+                                <a class="btn btn-primary btn-block ajax" n:href="addProductToOrder! $product->id, $action->id"
                                         title="Přidat produkt do aktuální objednávky. Produkt lze následně i odebrat.">
                                     <i class="icon-plus icon-white"></i>
                                     Přidat do objednávky
@@ -87,8 +89,9 @@
 
         </div>
     </div>
-
+    {/if}
     {/foreach}
+    {/snippet}
     </div>
     <div class="span4">
         <div  id="right-sidebar">
@@ -96,7 +99,7 @@
             {snippet sidebar}
             {include 'sidebar-snippet.latte'}
             {/snippet}
-            <a id="order-to-2nd-step" class="btn btn-info btn-block"
+            <a id="order-to-2nd-step" class="btn btn-info btn-block" n:href="Order:selectOrderPickUp"
                title="Stiskněte pro přechod k dalšímu kroku objednávky, kde zvolíte termín vyzvednutí.">Dokončit objednávku</a>
         </div>
     </div>

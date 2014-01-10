@@ -10,12 +10,22 @@
             </button>
             <a class="brand" href="#">Objednávkový systém</a>
             <div class="nav-collapse collapse">
+                <p class="navbar-text pull-right">
+                    {if $user->isLoggedIn()}
+                        Jste přihlášen jako <a title="Zobrazit můj uživatelský profil.">{$user->getIdentity()->username}</a>
+                        ,<a n:href="Sign:out" title="Provede odhlášení ze systému.">odhlásit</a>
+                    {else}
+                        Aktuálně nejste přihlášeni, <a n:href="Sign:in" title="Zobrazí Vám přihlašovací dialog">přihlásit se</a>
+                    {/if}
+                </p>
                 <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a n:href="Product:default">Produkty</a></li>
+                    {if $user->isLoggedIn()}
+                    <li><a n:href="Order:default">Mé objednávky</a></li>
+                    {/if}
                     <li>Zaregistrovat</li>
                 </ul>
             </div><!--/.nav-collapse -->
+
         </div>
     </div>
 </div>

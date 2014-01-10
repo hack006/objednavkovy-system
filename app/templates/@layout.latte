@@ -40,9 +40,13 @@
 
 <div id="content">
     <div class="container">
+        {block navigation}
+        {/block}
+        {snippet flash}
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
         {$flash->message}
         </div>
+        {/snippet}
         <div class="page-header" n:ifset="$title">
             <h1>{$title}</h1>
         </div>
@@ -84,3 +88,4 @@
 <div id="status-modal"></div>
 </body>
 </html>
+{dump}

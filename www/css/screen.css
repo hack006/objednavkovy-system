@@ -44,6 +44,20 @@ html.js .jshidden {
 	display: none;
 }
 
+/* globalni */
+sup.required{
+   font-weight: bold;
+   color: red;
+}
+td.price{
+    color: red;
+}
+
+table.table tfoot{
+    font-weight: bold;
+    background-color: #fff4ba;
+}
+
 /* modální prvek sloužící pro zobrazení loaderu */
 #status-modal{
     /* vicemene prevzato z: http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation */
@@ -116,7 +130,6 @@ html.js .jshidden {
     text-align: left;
 }
 #product-detail td.price{
-    color: red;
     text-align: right;
     min-width: 200px;
 }
@@ -135,3 +148,58 @@ html.js .jshidden {
 #order-to-2nd-step{
     margin: 2em 0 1em 0;
 }
+
+/* komponenta kalendar */
+.calendar-wrapper table {
+    width: 100%;
+    border-left:1px solid #999;
+}
+.calendar-wrapper .empty-day{
+    background-color: #EEE;
+}
+.calendar-wrapper td{
+    height: 50px;
+    padding:5px;
+    border: solid 1px #999;
+    vertical-align: top;
+}
+.calendar-wrapper .calendar-day{
+    min-height: 80px;
+    width: calc(100% / 7);
+}
+.calendar-wrapper .calendar-day .day-number{
+    background-color: #999;
+    padding:5px;
+    font-size: 1.4em;
+    font-weight:bold;
+    float:right;
+    margin:-5px -5px 0 0;
+    width:20px;
+    text-align:center
+}
+.calendar-wrapper .calendar-day .day-number a{
+    color:#000000 !important;
+    text-decoration: underline;
+}
+.calendar-wrapper .calendar-day .item{
+    border: solid 1px #EEEEEE;
+    padding: 2px;
+    width: calc(100% - 35px);
+    font-size: 0.8em;
+}
+.calendar-wrapper .calendar-day.in-the-past .day-number{
+    border-left: solid 3px #cf3c26;
+    border-bottom: solid 3px #cf3c26;
+    background-color: #ffd6c3;
+}
+.calendar-wrapper .calendar-day.order-possible .day-number{
+    border-left: solid 3px #3a9a2c;
+    border-bottom: solid 3px #3a9a2c;
+    background-color: #e6ffd5;
+}
+.calendar-wrapper .calendar-day.selected{
+    background-color: #b4e7ff;
+}
+
+/* souhrn objednavky */
+#order-summary #products

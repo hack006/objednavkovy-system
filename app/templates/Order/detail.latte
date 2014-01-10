@@ -1,0 +1,101 @@
+{block navigation}
+    {control detailBreadcrumb}
+{/block}
+
+{block content}
+<div class="alert alert-info">
+    <i class="icon-print"></i>
+    Tato stránka je optimalizována pro tisk.
+</div>
+<h2>Údaje</h2>
+<table class="table">
+    <tr>
+        <th>Stav vyřízení:</th>
+        <td>
+            {if $order->status == 'new'}
+                <span class="label">
+                    čeká na vyřízení
+                </span>
+            {elseif $order->status == 'done'}
+                <span class="label label-warning">
+                    připraveno k vyzvednutí
+                </span>
+            {elseif $order->status == 'accepted'}
+                <span class="label label-info">
+                    zarezervováno
+                </span>
+            {elseif $order->status == 'canceled'}
+                <span class="label label-important">
+                    zrušeno
+                </span>
+            {elseif $order->status == 'pickedup'}
+                <span class="label label-success">
+                    vyzvednuto
+                </span>
+            {/if}
+        </td>
+    </tr>
+    <tr>
+        <th>Datum objednání:</th>
+        <td>{$order->order_time}</td>
+    </tr>
+    <tr>
+        <th>Datum vyzvednutí:</th>
+        <td>{$order->fetch_time}</td>
+    </tr>
+
+    <tr>
+        <th>Připraveno k vyzvednutí:</th>
+        <td>
+            {if $order->prepared_time->getTimeStamp() < 0}
+            -
+            {else}
+            {$order->prepared_time}
+            {/if}
+        </td>
+    </tr>
+    <tr>
+        <th>Vyzvednuto:</th>
+        <td>
+            {if $order->picked_up_time->getTimestamp() < 0}
+            -
+            {else}
+            {$order->picked_up_time}
+            {/if}
+        </td>
+    </tr>
+</table>
+<h2>Položky</h2>
+<table id="products" class="table">
+    <thead>
+    <tr>
+        <th >Název</th>
+        <th>Obrázek</th>
+        <th>Cena za kus (bez daně)</th>
+        <th>Daň</th>
+        <th>Cena za kus (s daní)</th>
+        <th>Počet</th>
+        <th>Celková cena</th>
+    </tr>
+    </thead>
+    {foreach $order_fields as $field}
+        <tbody>
+        <tr>
+            <td>{$field->name}</td>
+            <td>
+                <img src="{$basePath}/{\ResSys\Imagefactory::getProductImage($field->product_id, \ResSys\Imagefactory::THUMB)}" />
+            </td>
+            <td class="price">{$field->price_without_tax} Kč</td>
+            <td>{$field->vat}%</td>
+            <td class="price">{$field->price_tax_included} Kč</td>
+            <td>{$field->count}x</td>
+            <td class="price">{$field->total_price_vat_included} Kč</td>
+        </tr>
+        </tbody>
+    {/foreach}
+    <tfoot>
+    <td colspan="6">Celkem</td>
+    <td class="price">{$order_price_total} Kč</td>
+    </tfoot>
+</table>
+{/block}
