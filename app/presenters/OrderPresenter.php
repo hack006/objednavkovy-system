@@ -98,7 +98,12 @@ class OrderPresenter extends BasePresenter{
     }
 
     public function renderSelectOrderPickUp(){
-        $this->mustBeSignedIn();
+        if(!$this->user->isLoggedIn()){
+            $this->flashMessage('Pro dokončení objednávky je třeba se přihlásit abychom měli k dispozici
+            Vaše kontaktní údaje. V případě, že u nás účet nemáte, pak se
+            <a href="'.$this->link('Sign:register').'" title="Zobrazí registrační formulář.">ZAREGISTRUJTE.</a>', 'alert');
+            $this->redirect('Sign:in');
+        }
         $this->template->title = 'Objednávka - volba času odběru (krok 2/3)';
     }
 

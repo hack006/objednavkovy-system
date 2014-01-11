@@ -48,7 +48,7 @@
         {/block}
         {snippet flash}
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
-        {$flash->message}
+        {$flash->message|noescape}
         </div>
         {/snippet}
 
@@ -97,7 +97,10 @@
 <script src="{$basePath}/js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{$basePath}/js/bootstrap.min.js"></script>
+<!--
 <script src="{$basePath}/js/netteForms.js"></script>
+-->
+<script src="{$basePath}/js/liveFormValidation.js"></script>
 <script src="{$basePath}/js/nette.ajax.js"></script>
 <script src="{$basePath}/js/main.js"></script>
 
