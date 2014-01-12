@@ -1,4 +1,9 @@
 <?php
+/**
+ * Objednávkový systém (https://github.com/hack006/objednavkovy-system)
+ *
+ * Copyright (C) 2014 Ondřej Janata (o.janata[at]gmail.com)
+ */
 
 namespace AdminModule;
 
@@ -23,6 +28,13 @@ abstract class BasePresenter extends \AbstractBasePresenter
     public function startup(){
         parent::startup();
 
+    }
+
+    public function beforeRender(){
+        parent::beforeRender();
+
+        // v administraci se smí pohybovat pouze admin!
+        $this->mustBeAdmin();
     }
 
 }

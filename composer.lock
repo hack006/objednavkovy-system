@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4ffd7990e8e141119d9138b72b092a58",
+    "hash": "b6dbcfe308f618f6231d200c5daac7d0",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -144,16 +144,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/o5/grido.git",
-                "reference": "df9da0a359f7c73d39af744c5c8a130f183f2d48"
+                "reference": "2f779d9c92a1e72b316686e9b60121aec2ecc635"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/o5/grido/zipball/df9da0a359f7c73d39af744c5c8a130f183f2d48",
-                "reference": "df9da0a359f7c73d39af744c5c8a130f183f2d48",
+                "url": "https://api.github.com/repos/o5/grido/zipball/2f779d9c92a1e72b316686e9b60121aec2ecc635",
+                "reference": "2f779d9c92a1e72b316686e9b60121aec2ecc635",
                 "shasum": ""
             },
             "require": {
-                "nette/nette": "@dev",
+                "nette/nette": "~2.0",
                 "php": ">=5.3"
             },
             "require-dev": {
@@ -192,7 +192,7 @@
                 "table",
                 "tablegrid"
             ],
-            "time": "2014-01-03 17:26:34"
+            "time": "2014-01-12 08:43:20"
         }
     ],
     "packages-dev": [

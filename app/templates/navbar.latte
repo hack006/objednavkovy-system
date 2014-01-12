@@ -23,6 +23,9 @@
                         {if $user->isLoggedIn()}
                         <li><a n:href="Order:default">Mé objednávky</a></li>
                         {/if}
+                        {if $user->isInRole('admin')}
+                        <li><a n:href="Admin:Dashboard:default"><i class="icon-briefcase icon-white"></i> ADMIN</a></li>
+                        {/if}
                     </ul>
                 </div><!--/.nav-collapse -->
 

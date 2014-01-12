@@ -12,6 +12,7 @@
 
 #content > .container{
     padding-top: 60px;
+    padding-bottom: 15px;
 }
 
 .row-fluid [class*="span"] {

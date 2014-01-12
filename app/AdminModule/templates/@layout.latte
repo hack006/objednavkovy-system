@@ -9,59 +9,119 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="description" content="">
-	<meta name="robots" content="{$robots}" n:ifset="$robots">
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="robots" content="{$robots}" n:ifset="$robots">
 
-	<title>{block title|striptags|upper}ADMINISTRACE {ifset $title} - {$title}{/ifset}{/block}</title>
-    <!--
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
-	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
-	-->
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+    <title>{block title|striptags|upper}Administrace {ifset $title} - {$title}{/ifset}{/block}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{$basePath}/css/bootstrap.css">
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap-responsive.css">
+
+    <link rel="stylesheet" media="all" href="{$basePath}/css/all.css">
+    <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css">
+    <link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
     <link rel="stylesheet" href="{$basePath}/css/bootstrap-custom.css">
+    <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-	{block head}{/block}
+{block head}{/block}
 </head>
 
 <body>
-    <script> document.documentElement.className+=' js' </script>
+<script> document.documentElement.className+=' js' </script>
 
-    {block navbar}{include 'navbar.latte'}{/block}
+<header>
+{block navbar}{include 'navbar.latte'}{/block}
+</header>
 
-    <div id="content">
+<div id="content">
+    <div class="container">
+    {block navigation}
+    {/block}
+    {snippet flash}
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
+            {$flash->message|noescape}
+        </div>
+    {/snippet}
 
+        <div class="page-header" n:ifset="$title">
+            <h1>{$title}</h1>
+        </div>
+    {include #content}
+    </div>
+</div>
+
+<footer>
+    <div id="footer">
         <div class="container">
-            <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
-            {$flash->message}
+            <div class="span3">
+                <h3>Cookies</h3>
+                <p>
+                    Naše aplikace využívá k poskytnutí služeb soubory cookies.
+                    Využíváním služeb souhlasíte s poskytováním cookies.
+                </p>
             </div>
-            <div class="page-header" n:ifset="$title">
-                <h1>{$title}</h1>
+            <div class="span3">
+                <h3>Provozovatel</h3>
+                <p>
+                    Zde můžete doplnit informace o své osobě/firmě.
+                </p>
+                <address>
+                    <strong>Společnost s.r.o.</strong><br />
+                    Ulice 123 <br />
+                    Praha 6<br />
+                    160 00
+                </address>
             </div>
-            {include #content}
+            <div class="span3">
+                <h3>Kontakt</h3>
+                <ul class="contact">
+                    <li><strong><abr title="Telefon">Tel</abr>:</strong> 987 654 321</li>
+                    <li><strong>Email:</strong> test@example.com</li>
+                </ul>
+            </div>
         </div>
     </div>
+</footer>
 
-    <div id="footer">
-        footer here
-    </div>
+{block scripts}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{$basePath}/js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{$basePath}/js/bootstrap.min.js"></script>
+<!--
+<script src="{$basePath}/js/netteForms.js"></script>
+-->
+<script src="{$basePath}/js/liveFormValidation.js"></script>
+<script src="{$basePath}/js/nette.ajax.js"></script>
+<script src="{$basePath}/js/main.js"></script>
 
-    {block scripts}
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{$basePath}/js/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{$basePath}/js/bootstrap.min.js"></script>
-    <script src="{$basePath}/js/netteForms.js"></script>
-    <script src="{$basePath}/js/main.js"></script>
-    {/block}
+<script n:syntax="off">
+    jQuery(document).ready(function(){
+        /* Init NETTE AJAX */
+        $.nette.init();
+        $.nette.ext("sidebar", {
+            before: function(){
+                jQuery("#status-modal").show();
+            },
+            complete: function(data){
+                jQuery("#status-modal").fadeOut(500);
+                var product_id = "#sidebar-product-id-" + data.product_id.toString();
+                jQuery(product_id).fadeTo('fast', 0.3).fadeTo(1000, 1.0); // zvyrazneni zmeneneho produktu
+            }});
+    });
+</script>
+
+{/block}
+<!-- modal window pouzivane pro ajax status signalizaci -->
+<div id="status-modal"></div>
 </body>
 </html>
-{dump}

@@ -36,6 +36,11 @@ td.price{
     color: red;
 }
 
+td.in-the-past{
+    color: red;
+    font-weight: bold;
+}
+
 table.table tfoot{
     font-weight: bold;
     background-color: #fff4ba;

@@ -17,9 +17,9 @@ common:
 			errorPresenter: Error
 
 		database:
-			dsn: 'mysql:host=localhost;dbname=test'
-			user: root
-			password: qwerfvbnm
+			dsn: 'mysql:host=localhost;dbname=obsys'
+			user: obsys
+			password: w6taVUS6bebZ9wme
 			reflection: ResSys\OwnDiscoveryReflection
 
 		session:

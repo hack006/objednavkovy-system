@@ -1,7 +1,9 @@
 # Jednoduchý webový objednávkový systém
 Tento systém vznikl v rámci semestrální práce pro předmět **WA1** na **ČVUT v Praze**. Hlavním smyslem aplikace je
 ulehčit práci a ušetřit čas malým podnikatelům, kteří se nechtějí zdržovat telefonickým vyřizováním objednávek svých
-zákazníků a svěřit tuto administrativní činnost automatizovanému systému.
+zákazníků a svěřit tuto administrativní činnost automatizovanému systému. Velkým plusem aplikace se **možnost zvolit
+datum a čas vyzvednutí objednávky s ohledem na uvedené otevírací hodiny**. Otevírací hodiny je možné nakonfigurovat
+libovolně pro jakýkoliv den.
 
 ![Náhled homepage](docs/vyber-produktu.jpg)
 

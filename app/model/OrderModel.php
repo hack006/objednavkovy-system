@@ -3,6 +3,16 @@ namespace ResSys;
 
 class OrderModel extends AbstractModelDB{
 
+    const ORDER_NEW = 0;
+
+    const ORDER_ACCEPTED = 1;
+
+    const ORDER_DONE = 2;
+
+    const ORDER_PICKED_UP = 4;
+
+    const ORDER_CANCELED = 8;
+
     /**
      * Přidá objednávku do DB
      *
@@ -21,6 +31,35 @@ class OrderModel extends AbstractModelDB{
             'user_id' => $user_id,
             'action_id' => $action_id
         ));
+    }
+
+    public function changeOrderStatus($order_id, $status){
+        switch($status){
+            case self::ORDER_NEW:
+                return;
+
+            case self::ORDER_ACCEPTED:
+                return $this->getTable()->where(array('id' => $order_id))->update(array(
+                    'status' => 'accepted'
+                ));
+
+            case self::ORDER_DONE:
+                return $this->getTable()->where(array('id' => $order_id))->update(array(
+                    'status' => 'done',
+                    'prepared_time' => date(\DateTime::ATOM, time())
+                ));
+
+            case self::ORDER_PICKED_UP:
+                return $this->getTable()->where(array('id' => $order_id))->update(array(
+                    'status' => 'pickedup',
+                    'picked_up_time' => date(\DateTime::ATOM, time())
+                ));
+
+            case self::ORDER_CANCELED:
+                return $this->getTable()->where(array('id' => $order_id))->update(array(
+                    'status' => 'canceled'
+                ));
+        }
     }
 
     /**

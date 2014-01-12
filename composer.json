@@ -1,17 +1,13 @@
 {
-	"name": "nette/sandbox",
-	"description": "The sandbox is a pre-packaged Nette Framework project, basic configured structure for your application.",
-	"homepage": "http://nette.org",
+	"name": "hack006/obsys",
+	"description": "Obsys is a simple web based order system with feature to schedule a pickup date with respect to provided opening hours.",
+	"homepage": "https://github.com/hack006/obsys",
 	"type": "project",
-	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"license": ["MIT"],
 	"authors": [
 		{
-			"name": "David Grudl",
+			"name": "Ondřej Janata",
 			"homepage": "http://davidgrudl.com"
-		},
-		{
-			"name": "Nette Community",
-			"homepage": "http://nette.org/contributors"
 		}
 	],
 	"config": {
