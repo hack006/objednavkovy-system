@@ -9,7 +9,9 @@ jQuery(document).ready(function(){
             jQuery("#status-modal").fadeOut(500);
         },
         success: function(data){
-            var product_id = "#sidebar-product-id-" + data.product_id.toString();
+            if('product_id' in data){
+                var product_id = "#sidebar-product-id-" + data.product_id.toString();
+            }
             jQuery(product_id).fadeTo('fast', 0.3).fadeTo(1000, 1.0); // zvyrazneni zmeneneho produktu
         },
         error: function(request, textStatus, errorThrown){
