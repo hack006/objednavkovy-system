@@ -50,7 +50,7 @@ class HomepagePresenter extends BasePresenter
                 try{
                     $this->template->product_images[$product->id] = ImageFactory::getProductImage($product->id, ImageFactory::THUMB);
                 }
-                catch(Exception $e){
+                catch(\Nette\FileNotFoundException $e){
                     // raději vykreslíme obrázek not-available, než rozbíjet layout chybějící výplní
                     $this->template->product_images[$product->id] = 'images/not-available_'.ImageFactory::THUMB.".jpg";
                 }

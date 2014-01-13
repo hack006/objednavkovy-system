@@ -1,6 +1,7 @@
 <?php
 use \Nette\Application\UI\Form;
 use \Grido\Grid;
+use \ResSys\ImageFactory;
 
 class OrderPresenter extends BasePresenter{
 
@@ -130,7 +131,19 @@ class OrderPresenter extends BasePresenter{
         $this->template->action = $this->actions->findAll()->get($order_p->getOrder()->getActionId());
         $this->template->user_info = $this->users->findAll()->get($this->user->getId());
         $this->template->order_price_total = $order_p->getOrder()->getTotalPrice();
-        $this->template->img_dir = IMG_DIR;
+
+        $this->template->product_images = array();
+        // ziskani url nahledu
+        foreach($order_p->getOrder()->getProducts() as $product){
+            // pokusit se načíst obrázek, pokud existuje
+            try{
+                $this->template->product_images[$product->id] = ImageFactory::getProductImage($product->id, ImageFactory::THUMB);
+            }
+            catch(Exception $e){
+                // raději vykreslíme obrázek not-available, než rozbíjet layout chybějící výplní
+                $this->template->product_images[$product->id] = 'images/not-available_'.ImageFactory::THUMB.".jpg";
+            }
+        }
     }
 
     public function renderDetail(){
@@ -147,6 +160,19 @@ class OrderPresenter extends BasePresenter{
         $this->template->order = $order;
         $this->template->order_price_total = $this->orders->getTotalPrice($order_id);
         $this->template->order_fields = $this->order_fields->getOrderFields($order_id);
+
+        $this->template->product_images = array();
+        // ziskani url nahledu
+        foreach($this->template->order_fields as $product){
+            // pokusit se načíst obrázek, pokud existuje
+            try{
+                $this->template->product_images[$product->product_id] = ImageFactory::getProductImage($product->product_id, ImageFactory::THUMB);
+            }
+            catch(Exception $e){
+                // raději vykreslíme obrázek not-available, než rozbíjet layout chybějící výplní
+                $this->template->product_images[$product->product_id] = 'images/not-available_'.ImageFactory::THUMB.".jpg";
+            }
+        }
     }
 
     public function createComponentCalendar(){

@@ -84,7 +84,7 @@
             <tr>
                 <td>{$field->name}</td>
                 <td>
-                    <img src="{$basePath}/{\ResSys\Imagefactory::getProductImage($field->product_id, \ResSys\Imagefactory::THUMB)}" />
+                    <img src="{$basePath}/{$product_images[$field->product_id]}" />
                 </td>
                 <td class="price">{$field->price_without_tax} Kč</td>
                 <td>{$field->vat}%</td>

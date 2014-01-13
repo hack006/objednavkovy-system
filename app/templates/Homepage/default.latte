@@ -40,7 +40,7 @@
                         {/if}
                                 <div class="product-cont span3">
                                     <h3>{$product->name}</h3>
-                                    <img n:attr="src => $product_images[$product->id], class => img-polaroid, alt => $product->name" />
+                                    <img n:attr="class => img-polaroid, alt => $product->name" src="{$basePath}/{$product_images[$product->id]}"/>
 
                                     {var $vat_value = 1 + $product->vat_value / 100}
                                     <table>

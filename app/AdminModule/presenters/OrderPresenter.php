@@ -7,6 +7,7 @@
 
 namespace AdminModule;
 use Grido\Grid;
+use \ResSys\ImageFactory;
 
 class OrderPresenter extends BasePresenter{
 
@@ -99,6 +100,20 @@ class OrderPresenter extends BasePresenter{
         $this->template->order = $order;
         $this->template->order_price_total = $this->orders->getTotalPrice($order_id);
         $this->template->order_fields = $this->order_fields->getOrderFields($order_id);
+        $this->template->customer = $this->users->findAll()->get($order->user_id);
+
+        $this->template->product_images = array();
+        // ziskani url nahledu
+        foreach($this->template->order_fields as $product){
+            // pokusit se načíst obrázek, pokud existuje
+            try{
+                $this->template->product_images[$product->product_id] = ImageFactory::getProductImage($product->product_id, ImageFactory::THUMB);
+            }
+            catch(\Nette\FileNotFoundException $e){
+                // raději vykreslíme obrázek not-available, než rozbíjet layout chybějící výplní
+                $this->template->product_images[$product->product_id] = 'images/not-available_'.ImageFactory::THUMB.".jpg";
+            }
+        }
     }
 
     public function actionAccept($order_id){

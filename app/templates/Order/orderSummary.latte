@@ -31,7 +31,7 @@
                 <tr>
                     <td>{$product->name}</td>
                     <td>
-                        <img src="{$basePath}/{\ResSys\Imagefactory::getProductImage($product->id, \ResSys\Imagefactory::THUMB)}" />
+                        <img src="{$basePath}/{$product_images[$product->id]}" />
                     </td>
                     <td class="price">{$product->price_vat_included} Kč</td>
                     <td>{$product->count}x</td>

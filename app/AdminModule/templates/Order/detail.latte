@@ -73,6 +73,21 @@
             </td>
         </tr>
     </table>
+    <h2>Zákazník</h2>
+    <table class="table">
+        <tr>
+            <th>Jméno</th>
+            <td>{$customer->firstname} {$customer->lastname} (#{$customer->id})</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{$customer->email}</td>
+        </tr>
+        <tr>
+            <th>Telefon: </th>
+            <td>{$customer->phone}</td>
+        </tr>
+    </table>
     <h2>Položky</h2>
     <table id="products" class="table">
         <thead>
@@ -91,7 +106,7 @@
             <tr>
                 <td>{$field->name}</td>
                 <td>
-                    <img src="{$basePath}/{\ResSys\Imagefactory::getProductImage($field->product_id, \ResSys\Imagefactory::THUMB)}" />
+                    <img src="{$basePath}/{$product_images[$field->product_id]}" />
                 </td>
                 <td class="price">{$field->price_without_tax} Kč</td>
                 <td>{$field->vat}%</td>

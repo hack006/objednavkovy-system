@@ -40,7 +40,7 @@ class ImageFactory{
                 $img = $img_basic->resize($width, $height, Image::EXACT);
                 $img->save($variant_name);
             }
-            catch(Exception $e){
+            catch(\Nette\UnknownImageFileException $e){
                 throw new \Nette\FileNotFoundException("Obrazový podklad není k dispozici!");
             }
         }
