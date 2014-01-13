@@ -31,7 +31,7 @@
                 <tr>
                     <td>{$product->name}</td>
                     <td>
-                        <img src="{$basePath}/{$product_images[$product->id]}" />
+                        <img src="{$basePath}/{$product_images[$product->id]}" alt="{$product->name}" />
                     </td>
                     <td class="price">{$product->price_vat_included} Kč</td>
                     <td>{$product->count}x</td>
@@ -40,8 +40,10 @@
             </tbody>
             {/foreach}
             <tfoot>
-                <td colspan="4">Celkem</td>
-                <td class="price">{$order_price_total} Kč</td>
+                <tr>
+                    <td colspan="4">Celkem</td>
+                    <td class="price">{$order_price_total} Kč</td>
+                </tr>
             </tfoot>
         </table>
 

@@ -209,8 +209,6 @@ class OrderPresenter extends BasePresenter{
         $form->setRenderer($renderer);
 
         $form_time = $form->addText('time', 'Čas odběru:')
-            ->addRule(Form::PATTERN, 'Chybný formát času!', '[0-9]{1,2}:[0-9]{1,2}')
-            ->setOption('placeholder', 'hh:mm')
             ->addRule('DateValidators::timeValidator', "Zadali jste neplatný čas! Dodržte prosím formát hh:mm.")
             ->setRequired()
             ->setType('time');

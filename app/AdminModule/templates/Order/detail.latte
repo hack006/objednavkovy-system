@@ -106,7 +106,7 @@
             <tr>
                 <td>{$field->name}</td>
                 <td>
-                    <img src="{$basePath}/{$product_images[$field->product_id]}" />
+                    <img src="{$basePath}/{$product_images[$field->product_id]}" alt="{$field->name}" />
                 </td>
                 <td class="price">{$field->price_without_tax} Kč</td>
                 <td>{$field->vat}%</td>
@@ -117,8 +117,10 @@
             </tbody>
         {/foreach}
         <tfoot>
-        <td colspan="6">Celkem</td>
-        <td class="price">{$order_price_total} Kč</td>
+        <tr>
+            <td colspan="6">Celkem</td>
+            <td class="price">{$order_price_total} Kč</td>
+        </tr>
         </tfoot>
     </table>
 </section>
