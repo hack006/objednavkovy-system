@@ -105,28 +105,9 @@
 <script src="{$basePath}/js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{$basePath}/js/bootstrap.min.js"></script>
-<!--
-<script src="{$basePath}/js/netteForms.js"></script>
--->
 <script src="{$basePath}/js/liveFormValidation.js"></script>
 <script src="{$basePath}/js/nette.ajax.js"></script>
 <script src="{$basePath}/js/main.js"></script>
-
-<script n:syntax="off" type="text/javascript">
-    jQuery(document).ready(function(){
-        /* Init NETTE AJAX */
-        $.nette.init();
-        $.nette.ext("sidebar", {
-        before: function(){
-            jQuery("#status-modal").show();
-        },
-        complete: function(data){
-            jQuery("#status-modal").fadeOut(500);
-            var product_id = "#sidebar-product-id-" + data.product_id.toString();
-            jQuery(product_id).fadeTo('fast', 0.3).fadeTo(1000, 1.0); // zvyrazneni zmeneneho produktu
-        }});
-    });
-</script>
 
 {/block}
 <!-- modal window pouzivane pro ajax status signalizaci -->
