@@ -9,6 +9,11 @@ use Nette\Application\UI;
 class ProductPresenter extends BasePresenter
 {
 
+    /**
+     * Defaultní akce
+     *
+     * @return string
+     */
     function defaultRender() {
         return "product_presenter";
     }

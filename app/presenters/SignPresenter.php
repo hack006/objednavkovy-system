@@ -37,8 +37,12 @@ class SignPresenter extends BasePresenter
 		return $form;
 	}
 
-
-	public function signInFormSucceeded($form)
+    /**
+     * Akce volající se po úspěšném odeslání přhlašovacího formuláře
+     *
+     * @param $form
+     */
+    public function signInFormSucceeded($form)
 	{
 		$values = $form->getValues();
 
@@ -57,23 +61,37 @@ class SignPresenter extends BasePresenter
 		}
 	}
 
+    /**
+     * Přihlašovací formulář
+     */
     public function actionIn(){
         $this->template->title = 'Přihlášení';
     }
 
-	public function actionOut()
+    /**
+     * Odhlášení ze systému
+     */
+    public function actionOut()
 	{
 		$this->getUser()->logout();
 		$this->flashMessage('Byli jste úspěšně odhlášeni z aplikace.');
 		$this->redirect('in');
 	}
 
+    /**
+     * Akce registrace nového uživatele
+     */
     public function renderRegister(){
         $this->template->title = 'Registrace';
 
 
     }
 
+    /**
+     * Továrnička pro registrační formulář
+     *
+     * @return Nette\Application\UI\Form
+     */
     public function createComponentRegisterForm(){
         $renderer = new \Kdyby\BootstrapFormRenderer\BootstrapRenderer();
 
@@ -117,6 +135,11 @@ class SignPresenter extends BasePresenter
         return $form;
     }
 
+    /**
+     * Validace unikátnosti uživatelského jména
+     *
+     * @param Nette\Application\UI\Form $form
+     */
     public function validateRegisterForm(\Nette\Application\UI\Form $form){
         $values = $form->getValues();
 
@@ -125,6 +148,11 @@ class SignPresenter extends BasePresenter
         }
     }
 
+    /**
+     * Zpracování odeslaného registračního formuláře
+     *
+     * @param Nette\Application\UI\Form $form
+     */
     public function registerFormSubmitted(\Nette\Application\UI\Form $form){
         $val = $form->getValues();
         $salted_password = \ResSys\Authenticator::calculateHash($val->password);

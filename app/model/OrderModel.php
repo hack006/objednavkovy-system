@@ -33,6 +33,13 @@ class OrderModel extends AbstractModelDB{
         ));
     }
 
+    /**
+     * Provede změnu statusu objednávky
+     *
+     * @param int $order_id Id objednávky
+     * @param string $status Nový status
+     * @return int
+     */
     public function changeOrderStatus($order_id, $status){
         switch($status){
             case self::ORDER_NEW:

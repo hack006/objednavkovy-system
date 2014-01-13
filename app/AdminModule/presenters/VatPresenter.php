@@ -9,6 +9,9 @@ namespace AdminModule;
 
 class VatPresenter extends \AdminModule\BasePresenter{
 
+    /**
+     * Defaultní akce, zobrazí výpis dostupných daňových sazeb
+     */
     public function renderDefault() {
         $this->template->title = 'Daňové sazby';
         $this->template->vats = $this->vats->findAll();

@@ -47,14 +47,21 @@ class OrderPresenter extends BasePresenter{
         $this->fetch_hours = $fetch_hours;
     }
 
+    /**
+     * Výchozí akce presenteru - výpis objednávek uživatele
+     */
     public function renderDefault(){
         $this->mustBeSignedIn();
 
         $this->template->title = "Přehled objednávek";
-        // @TODO vypsat dosavadni objednavky uzivatele
         $this->template->user_orders = $this->orders->getUserOrders($this->user->getId());
     }
 
+    /**
+     * Továrnička na datagrid pro uživatelské objednávky
+     *
+     * @return Grido\Grid
+     */
     public function createComponentUserOrdersGrid(){
         $grid = new \Grido\Grid($this, 'userOrdersGrid');
         $grid->setModel($this->orders->getUserOrders($this->user->getId()));
@@ -98,6 +105,9 @@ class OrderPresenter extends BasePresenter{
         }
     }
 
+    /**
+     * Akce pro výběr data vyzvednutí objednávky
+     */
     public function renderSelectOrderPickUp(){
         if(!$this->user->isLoggedIn()){
             $this->flashMessage('Pro dokončení objednávky je třeba se přihlásit abychom měli k dispozici
@@ -108,8 +118,10 @@ class OrderPresenter extends BasePresenter{
         $this->template->title = 'Objednávka - volba času odběru (krok 2/3)';
     }
 
+    /**
+     * Akce zobrazující souhrn objednávky, finální krok před potvrzením
+     */
     public function renderOrderSummary(){
-        // TODO dodelat styl pro tisk!
         $this->mustBeSignedIn();
         // kontrola, zda vše validní
         if(!isset($this->getSession("user_space")->current_order)){
@@ -146,6 +158,9 @@ class OrderPresenter extends BasePresenter{
         }
     }
 
+    /**
+     * Akce zobrazící detail dané objednávky
+     */
     public function renderDetail(){
         // TODO css pro tisk
         $this->mustBeSignedIn();
@@ -175,6 +190,11 @@ class OrderPresenter extends BasePresenter{
         }
     }
 
+    /**
+     * Továrnička na vytvoření komponenty kalendáře na výběr data vyzvednutí
+     *
+     * @return CalendarControl
+     */
     public function createComponentCalendar(){
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);
 
@@ -192,6 +212,13 @@ class OrderPresenter extends BasePresenter{
         return $c;
     }
 
+    /**
+     * Handler obsluhující událost výběru data v kalendáři
+     *
+     * @param int $day
+     * @param int $month
+     * @param int $year
+     */
     public function calendarDaySelectHandler($day,$month,$year){
         // uložit do session
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);
@@ -200,6 +227,11 @@ class OrderPresenter extends BasePresenter{
         $this->getSession("user_space")->current_order;
     }
 
+    /**
+     * Továrnička k tvorbě jednoduchého formuláře pro zadání času odběru
+     *
+     * @return Nette\Application\UI\Form
+     */
     public function createComponentTimeForm(){
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);
 
@@ -226,6 +258,11 @@ class OrderPresenter extends BasePresenter{
         return $form;
     }
 
+    /**
+     * Handler pro obsluhu odeslaného formuláře s datem vyzvednutí zboží
+     *
+     * @param Nette\Application\UI\Form $form
+     */
     public function timeFormSubmitted(\Nette\Application\UI\Form $form){
         $this->mustBeSignedIn();
         // TODO doplnit cas do objednavky
@@ -250,6 +287,14 @@ class OrderPresenter extends BasePresenter{
 
     }
 
+    /**
+     * Metoda vracející otevírací doby v daný den
+     *
+     * @param int $day Den
+     * @param int $month Měsíc
+     * @param int $year Rok
+     * @return array
+     */
     public function getDayContent($day, $month, $year){
         $order = $this->getSession("user_space")->current_order;
         $action_date = $year.'-'.$month.'-'.$day;
@@ -284,6 +329,9 @@ class OrderPresenter extends BasePresenter{
         return $ret;
     }
 
+    /**
+     * Akce pro potvrzení objednávky a uložení jí do db
+     */
     public function actionConfirmOrder(){
         $this->mustBeSignedIn();
         $order_p = new \ResSys\OrderProxy($this->context->getService('database'), $this->getSession("user_space")->current_order);

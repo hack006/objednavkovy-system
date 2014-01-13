@@ -13,8 +13,14 @@ class OrderProxy{
      */
     private $order;
 
+    /**
+     * @var OrderModel Db přístup k entitě order.
+     */
     private $orders;
 
+    /**
+     * @var OrderFieldModel Db přístup k entitě order field
+     */
     private $order_fields;
 
     /**
@@ -125,11 +131,21 @@ class OrderProxy{
 
     }
 
+    /**
+     * Nastaví čas vyzvednutí
+     *
+     * @param \Nette\DateTime $date
+     */
     public function setPickUpDate(\Nette\DateTime $date){
         // @todo validace
         $this->order->setPickUpDate($date);
     }
 
+    /**
+     * Vrátí čas vyzvednutí objednávky
+     *
+     * @return \Nette\DateTime|null
+     */
     public function getPickUpDate(){
         return $this->order->getPickUpDate();
     }

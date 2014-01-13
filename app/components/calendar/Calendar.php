@@ -59,6 +59,7 @@ class CalendarControl extends UI\Control
 
     /**
      * Nastaví vybraný den v kalendáři
+     *
      * @param $day Den
      * @param $month Měsíc
      * @param $year Rok
@@ -98,6 +99,9 @@ class CalendarControl extends UI\Control
         $this->get_day_html_content_func = $function;
     }
 
+    /**
+     * Metoda, která má na starosti vykreslení komponenty
+     */
     public function render(){
         // kontrola validity předávaných parametrů specifikujících zobrazovaný měsíc
         if($this->month < 1 || $this->month > 12 || $this->year < 1971 || $this->year > 2035){
@@ -148,6 +152,9 @@ class CalendarControl extends UI\Control
         }
     }
 
+    /**
+     * Handler signálu přechod na další měsíc
+     */
     public function handleNextMonth(){
         // přechod do následujícího roku
         if($this->month == 12){
@@ -161,6 +168,9 @@ class CalendarControl extends UI\Control
         $this->redrawControl('calendarbody');
     }
 
+    /**
+     * Handler signálu přechod k předchozímu měsíci
+     */
     public function handlePreviousMonth(){
         // přechod do předchozího
         if($this->month == 1){
@@ -174,10 +184,26 @@ class CalendarControl extends UI\Control
         $this->redrawControl('calendarbody');
     }
 
+    /**
+     * Metoda volající funkci určenou uživatelem, která vrací obsah pro daný den
+     *
+     * @param int $day Den
+     * @param int $month Měsíc
+     * @param int $year Rok
+     * @return mixed Pole událostí pro daný den
+     */
     public function getDayContent($day, $month, $year){
         return $this->get_day_html_content_func->__invoke($day,$month,$year);
     }
 
+    /**
+     * Výchozí funkce pro plnění dnů kalendáře, pokud uživatel nespecifikuje jinou
+     *
+     * @param int $day Den
+     * @param int $month Měsíc
+     * @param int $year Rok
+     * @return array
+     */
     public function defaultGetDayContentFunc($day, $month, $year){
         return array('class' => 'default', 'selectable' => true);
     }

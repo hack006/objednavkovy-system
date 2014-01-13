@@ -21,16 +21,30 @@ class OrderPresenter extends BasePresenter{
      */
     private $order_fields;
 
+    /**
+     * Předává presenteru zdroje
+     *
+     * @param \ResSys\OrderModel $order_model
+     * @param \ResSys\OrderFieldModel $order_field_model
+     */
     public function inject(\ResSys\OrderModel $order_model, \ResSys\OrderFieldModel $order_field_model){
         $this->orders = $order_model;
         $this->order_fields = $order_field_model;
     }
 
+    /**
+     * Defaultní akce presenteru, zobrazí výpis všech objednávek do datagridu
+     */
     public function renderDefault(){
         $this->mustBeAdmin();
 
     }
 
+    /**
+     * Továrnička na vytvoření datagridu pro objednávky
+     *
+     * @return \Grido\Grid
+     */
     public function createComponentOrderGrid(){
         $grid = new Grid($this, 'orderGrid');
         $grid->setModel($this->orders->findAll());
@@ -76,6 +90,9 @@ class OrderPresenter extends BasePresenter{
         }
     }
 
+    /**
+     * Akce pro zobrazení detailu objednávky
+     */
     public function renderDetail(){
         $this->mustBeAdmin();
 
@@ -116,6 +133,11 @@ class OrderPresenter extends BasePresenter{
         }
     }
 
+    /**
+     * Akce pro změnu stavu objednávky na přijatý
+     *
+     * @param int $order_id Id objednávky
+     */
     public function actionAccept($order_id){
         $this->mustBeAdmin();
 
@@ -125,6 +147,11 @@ class OrderPresenter extends BasePresenter{
         $this->redirect('Order:', array('id' => $order_id));
     }
 
+    /**
+     * Akce pro změnu stavu objednávky na vyrobeno
+     *
+     * @param int $order_id Id objednávky
+     */
     public function actionDone($order_id){
         $this->mustBeAdmin();
 
@@ -134,6 +161,11 @@ class OrderPresenter extends BasePresenter{
         $this->redirect('Order:', array('id' => $order_id));
     }
 
+    /**
+     * Akce pro změnu stavu objednávky na vyzvednuto
+     *
+     * @param int $order_id Id objednávky
+     */
     public function actionPickedUp($order_id){
         $this->mustBeAdmin();
 
@@ -143,6 +175,11 @@ class OrderPresenter extends BasePresenter{
         $this->redirect('Order:', array('id' => $order_id));
     }
 
+    /**
+     * Akce pro stornování objednávky
+     *
+     * @param int $order_id Id objednávky
+     */
     public function actionCancel($order_id){
         $this->mustBeAdmin();
 

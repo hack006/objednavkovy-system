@@ -10,14 +10,14 @@ class UserModel extends AbstractModelDB{
     /**
      * Vytvoří nového uživatele
      *
-     * @param string $firstname
-     * @param string $lastname
-     * @param string $username
-     * @param string $password
-     * @param string $email
-     * @param string $phone
-     * @param string $city
-     * @param string $role
+     * @param string $firstname Křestní jméno
+     * @param string $lastname Příjmení
+     * @param string $username Uživatelské jméno
+     * @param string $password Heslo
+     * @param string $email Email
+     * @param string $phone Telefon
+     * @param string $city Město bydliště
+     * @param string $role Role v systému
      */
     public function createUser($firstname, $lastname, $username, $password, $email, $phone, $city, $role){
         // TODO osolit heslo

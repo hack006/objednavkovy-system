@@ -3,6 +3,9 @@ namespace ResSys;
 
 class OrderFieldModel extends AbstractModelDB{
 
+    /**
+     * @var ProductModel DB přístup k entitě produkt
+     */
     private $products;
 
     function __construct(\Nette\Database\Connection $db, \ResSys\ProductModel $products)

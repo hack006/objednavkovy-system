@@ -9,6 +9,9 @@ namespace AdminModule;
 
 class DashboardPresenter extends BasePresenter{
 
+    /**
+     * Defaultní akce presenteru
+     */
     public function renderDefault(){
         $this->template->title = 'Dashboard';
     }

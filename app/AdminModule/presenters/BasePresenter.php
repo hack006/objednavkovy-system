@@ -30,6 +30,10 @@ abstract class BasePresenter extends \AbstractBasePresenter
 
     }
 
+    /**
+     * Metoda spouštící se před vykreslovací fází, ověřuje pro celou administraci, že uživatel má admin oprávnění.
+     * Pokud nemá udělá redirect na přihlašovací stránku.
+     */
     public function beforeRender(){
         parent::beforeRender();
 

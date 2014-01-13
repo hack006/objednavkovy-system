@@ -2,6 +2,14 @@
 namespace ResSys;
 
 class FetchHourModel extends AbstractModelDB{
+
+    /**
+     * Zjistí, zda v daný čas je možné vyzvednout zboží
+     *
+     * @param int $action_id Id akce
+     * @param \DateTime $date Čas, který testujeme
+     * @return bool
+     */
     public function isValidFetchTime($action_id, \DateTime $date){
         $date_string = $date->format('Y-m-d');
         $time_string = $date->format('H:i');
