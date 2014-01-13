@@ -144,13 +144,13 @@ class HomepagePresenter extends BasePresenter
         try{
             $img_file = ImageFactory::getProductImage($product_id, ImageFactory::DETAIL);
         }
-        catch(Exception $e){
+        catch(\Nette\FileNotFoundException $e){
             // raději vykreslíme obrázek not-available, než rozbíjet layout chybějící výplní
             $img_file = 'images/not-available_'.ImageFactory::DETAIL.".jpg";
         }
         $this->template->img = $img_file;
 
-        $this->redrawControl('productdetail');
+        $this->redrawControl('actions');
     }
 
 }

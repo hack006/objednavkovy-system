@@ -26,9 +26,9 @@
                     </div>
 
                     <div class="products">
-                        {snippet productdetail}
+                        {* snippet "productdetail-".$action->id *}
                             {include 'productdetail-snippet.latte'}
-                        {/snippet}
+                        {* /snippet *}
                         <h3>Produkty</h3>
                         {if count($action_products[$action->id]) <= 0}
                             V současné době nejsou pro tuto akci k dispozici žádné produkty.
